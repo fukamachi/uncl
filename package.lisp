@@ -96,6 +96,7 @@
            :cddr
            :loop
            :format
+           :do
            ))
 
 (defpackage uncl-user

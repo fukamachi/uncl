@@ -71,6 +71,7 @@
   (define-macro-symbol fn lambda)
   (define-macro-symbol defmacro defmacro!)
   (define-macro-symbol let let2)
+  (define-macro-symbol do progn)
 
   ;; functions
   (dolist (alias aliases)
