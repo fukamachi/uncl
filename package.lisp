@@ -38,6 +38,13 @@
            ;; alias
            :fn
            :def
+           :call
+           :append!
+           :reverse!
+           :inc!
+           :dec!
+           :push!
+           :pop!
            :zero?
            :complex?
            :rational?
@@ -67,6 +74,9 @@
            :use-package
            :defpackage
            :defun
+           :apply
+           :append
+           :reverse
            :+
            :-
            :*
@@ -78,6 +88,8 @@
            :=
            :nil
            :t
+           :cons
+           :list
            :car
            :cdr
            :caar

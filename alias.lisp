@@ -54,5 +54,12 @@
   (define-macro-symbol defmacro defmacro!)
   (define-macro-symbol let let2)
   (setf (macro-function 'def) (macro-function 'defvar))
+  (setf (symbol-function 'call) (symbol-function 'funcall))
+  (setf (symbol-function 'append!) (symbol-function 'nconc))
+  (setf (symbol-function 'reverse!) (symbol-function 'nreverse))
+  (define-macro-symbol inc! incf)
+  (define-macro-symbol dec! decf)
+  (define-macro-symbol push! push)
+  (define-macro-symbol pop! pop)
 
   (enable-escape-sequence))
