@@ -43,6 +43,7 @@
            :do
            :append!
            :reverse!
+           :set!
            :inc!
            :dec!
            :push!

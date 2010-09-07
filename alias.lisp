@@ -27,6 +27,7 @@
     (y/n? y-or-n-p)
     (append! nconc)
     (reverse! nreverse)
+    (set! setf)
     (inc! incf)
     (dec! decf)
     (push! push)
