@@ -65,8 +65,6 @@
            :cons?
            :array?
            :vector?
-           :equal?
-           :type?
            :y/n?
 
            ;; from COMMON-LISP

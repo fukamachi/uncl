@@ -1,65 +1,79 @@
 (in-package :uncl)
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (let ( (r (copy-readtable nil)) )
-    (defun read-symbol (stream)
-      (let ( (*readtable* r) )
-        (read-preserving-whitespace stream))))
+(let ( (r (copy-readtable nil)) )
+  (defun read-symbol (stream)
+    (let ( (*readtable* r) )
+      (read-preserving-whitespace stream))))
 
-  (defun symbol-reader-macro-reader (stream char)
-    (unread-char char stream)
-    (let* ((s (read-symbol stream))
-           (f (get s 'symbol-reader-macro)))
-      (if f (funcall f stream s) s)))
+(defun symbol-reader-macro-reader (stream char)
+  (unread-char char stream)
+  (let* ((s (read-symbol stream))
+         (f (get s 'symbol-reader-macro)))
+    (if f (funcall f stream s) s)))
 
-  (defun set-macro-symbol (symbol readfn)
-    (setf (get symbol 'symbol-reader-macro) readfn)
-    t)
+(defun set-macro-symbol (symbol readfn)
+  (setf (get symbol 'symbol-reader-macro) readfn)
+  t)
 
-  (defmacro define-macro-symbol (from to)
-    `(set-macro-symbol ',from
-                       #'(lambda (stream symbol)
-                           (declare (ignore stream symbol))
-                           ',to))))
+(defmacro define-macro-symbol (from to)
+  `(set-macro-symbol ',from
+                     #'(lambda (stream symbol)
+                         (declare (ignore stream symbol))
+                         ',to)))
 
-(defparameter p-symbols
-  '(slot-exists-p complexp arrayp tailp oddp listp rationalp zerop
-    symbolp char-greaterp interactive-stream-p random-state-p
-    adjustable-array-p string-not-greaterp
-    standard-char-p consp readtablep packagep realp alphanumericp
-    plusp digit-char-p evenp special-operator-p string-lessp
-    char-not-lessp vectorp both-case-p graphic-char-p endp pathnamep
-    string-greaterp numberp wild-pathname-p array-in-bounds-p
-    characterp char-not-greaterp logbitp simple-vector-p
-    boundp typep hash-table-p stringp pathname-match-p
-    slot-boundp array-has-fill-pointer-p integerp
-    simple-bit-vector-p alpha-char-p fboundp
-    upper-case-p subsetp subtypep output-stream-p open-stream-p
-    simple-string-p floatp char-lessp constantp
-    string-not-lessp streamp lower-case-p compiled-function-p
-    input-stream-p functionp keywordp equalp minusp bit-vector-p))
+(defparameter aliases
+  '((def defvar)
+    (call funcall)
+    (y/n? y-or-n-p)
+    (append! nconc)
+    (reverse! nreverse)
+    (inc! incf)
+    (dec! decf)
+    (push! push)
+    (pop! pop)
+    (zero? zerop)
+    (complex? complexp)
+    (rational? rationalp)
+    (real? realp)
+    (float? floatp)
+    (integer? integerp)
+    (constant? constantp)
+    (number? numberp)
+    (plus? plusp)
+    (minus? minusp)
+    (even? evenp)
+    (odd? oddp)
+    (symbol? symbolp)
+    (keyword? keywordp)
+    (function? functionp)
+    (string? stringp)
+    (list? listp)
+    (cons? consp)
+    (array? arrayp)
+    (vector? vectorp)
+    ))
+
+(defun defalias (to from)
+  (cond
+    ((macro-function from)
+     (setf (macro-function to) (macro-function from)))
+    ((symbol-function from)
+     (setf (symbol-function to) (symbol-function from)))
+    (t (define-macro-symbol from to))))
 
 (defun init-readtable ()
   (map nil (lambda (c)
              (set-macro-character c 'symbol-reader-macro-reader t))
        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_")
 
-  (dolist (p-symb p-symbols)
-    (let ((q-symb (symb (#~s/-?[pP]$/?/ (symbol-name p-symb)))))
-      (setf (symbol-function q-symb) (symbol-function p-symb))))
-
-  (setf (symbol-function 'y/n?) (symbol-function 'y-or-n-p))
+  ;; special forms
   (define-macro-symbol if aif)
   (define-macro-symbol fn lambda)
   (define-macro-symbol defmacro defmacro!)
   (define-macro-symbol let let2)
-  (setf (macro-function 'def) (macro-function 'defvar))
-  (setf (symbol-function 'call) (symbol-function 'funcall))
-  (setf (symbol-function 'append!) (symbol-function 'nconc))
-  (setf (symbol-function 'reverse!) (symbol-function 'nreverse))
-  (define-macro-symbol inc! incf)
-  (define-macro-symbol dec! decf)
-  (define-macro-symbol push! push)
-  (define-macro-symbol pop! pop)
+
+  ;; functions
+  (dolist (alias aliases)
+    (apply #'defalias alias))
 
   (enable-escape-sequence))
