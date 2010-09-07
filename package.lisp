@@ -37,6 +37,7 @@
 
            ;; alias
            :fn
+           :def
            :zero?
            :complex?
            :rational?

@@ -53,5 +53,6 @@
   (define-macro-symbol fn lambda)
   (define-macro-symbol defmacro defmacro!)
   (define-macro-symbol let let2)
+  (setf (macro-function 'def) (macro-function 'defvar))
 
   (enable-escape-sequence))
