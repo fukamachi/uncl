@@ -51,4 +51,6 @@
   (setf (symbol-function 'y/n?) (symbol-function 'y-or-n-p))
   (define-macro-symbol if aif)
   (define-macro-symbol fn lambda)
-  (define-macro-symbol defmacro defmacro!))
+  (define-macro-symbol defmacro defmacro!)
+
+  (enable-escape-sequence))

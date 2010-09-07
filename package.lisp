@@ -4,7 +4,18 @@
 
 (defpackage uncl
   (:nicknames :ucl)
-  (:use :cl :cl-ppcre)
+  (:use :cl :cl-ppcre :cl-interpol)
+  (:import-from :cl-interpol
+                :*stream*
+                :*start-char*
+                :*term-char*
+                :*pair-level*
+                :*inner-delimiters*
+                :*saw-backslash*
+                :*readtable-copy*
+                :inner-reader
+                :read-char*
+                :*previous-readtables*)
   (:export :flatten
            :group
            :set-macro-symbol
