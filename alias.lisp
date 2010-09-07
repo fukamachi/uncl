@@ -52,5 +52,6 @@
   (define-macro-symbol if aif)
   (define-macro-symbol fn lambda)
   (define-macro-symbol defmacro defmacro!)
+  (define-macro-symbol let let2)
 
   (enable-escape-sequence))

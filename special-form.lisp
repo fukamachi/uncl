@@ -27,8 +27,11 @@
                            `(cdr ,args#)))))
           ds))))
 
+(defmacro let2 (letargs &rest body)
+  `(let ,(group letargs 2) ,@body))
+
 (defmacro alet (letargs &rest body)
-  `(let ((this) ,@letargs)
+  `(let ((this) ,@(group letargs 2))
      (setq this ,@(last body))
      ,@(butlast body)
      (lambda (&rest params)

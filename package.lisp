@@ -26,6 +26,7 @@
            :dfn
            :alet
            :if
+           :let
            :defmacro
            :slurp
 
