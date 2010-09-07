@@ -63,6 +63,16 @@
            ;; from COMMON-LISP
            :in-package
            :defpackage
+           :+
+           :-
+           :*
+           :/
+           :<
+           :>
+           :<=
+           :>=
+           :=
+           :nil
            ))
 
 (defpackage uncl-user
