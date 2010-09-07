@@ -65,4 +65,7 @@
            :defpackage
            ))
 
+(defpackage uncl-user
+  (:use :uncl))
+
 (setf *print-case* :downcase)
