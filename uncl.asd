@@ -1,0 +1,24 @@
+(in-package :cl-user)
+
+(defpackage uncl-asd
+  (:use :cl :asdf))
+
+(in-package :uncl-asd)
+
+(defsystem uncl
+  :version "1.0.0-SNAPSHOT"
+  :author "Eitarow Fukamachi"
+  :license "MIT"
+  :serial t
+  :components ((:file "package")
+               (:file "util")
+               (:file "sharp-l")
+               (:file "sharp-backquote")
+               (:file "defmacro")
+               (:file "ppcre")
+               (:file "special-form")
+               (:file "debug")
+               (:file "alias")))
+
+(defmethod asdf:perform :after ((op load-op) (c (eql (find-system :uncl))))
+  (funcall (intern (symbol-name :init-readtable) (find-package :uncl))))
