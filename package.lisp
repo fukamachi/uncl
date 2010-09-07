@@ -26,6 +26,7 @@
            :dfn
            :alet
            :if
+           :cond
            :let
            :defmacro
            :slurp
@@ -39,6 +40,7 @@
            :fn
            :def
            :call
+           :do
            :append!
            :reverse!
            :inc!
@@ -96,7 +98,6 @@
            :cddr
            :loop
            :format
-           :do
            ))
 
 (defpackage uncl-user

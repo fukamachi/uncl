@@ -36,3 +36,18 @@
      ,@(butlast body)
      (lambda (&rest params)
        (apply this params))))
+
+(defmacro! acond (&rest clauses)
+  (if (null clauses)
+      nil
+      (let ((cl1 (car clauses))
+            (it-symb (intern "IT" *package*)))
+        `(let ((,sym# ,(car cl1)))
+           (if ,sym#
+               ,(if (member it-symb (flatten (cdr cl1)))
+                    `(let ((,it-symb ,sym#)) ,@(cdr cl1))
+                    `(progn ,@(cdr cl1)))
+               (acond ,@(cdr clauses)))))))
+
+(defmacro acond2 (&rest clauses)
+  `(acond ,@(group clauses 2)))
