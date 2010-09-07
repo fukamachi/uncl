@@ -64,7 +64,9 @@
 
            ;; from COMMON-LISP
            :in-package
+           :use-package
            :defpackage
+           :defun
            :+
            :-
            :*
@@ -75,6 +77,15 @@
            :>=
            :=
            :nil
+           :t
+           :car
+           :cdr
+           :caar
+           :cadr
+           :cdar
+           :cddr
+           :loop
+           :format
            ))
 
 (defpackage uncl-user
