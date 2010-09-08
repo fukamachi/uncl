@@ -17,8 +17,9 @@
   (unread-char char stream)
   (let ((s (read-symbol stream)))
     (acond2
+     (not (symbolp s)) s
      (get s 'symbol-reader-macro) (funcall it stream s)
-     (and (symbolp s) (double-dot-symbol s)) it
+     (double-dot-symbol s) it
      t s)))
 
 (defun set-macro-symbol (symbol readfn)
