@@ -1,0 +1,20 @@
+(in-package :uncl)
+
+(defun sharp-left-brace (stream char num)
+  (declare (ignore char))
+  (let ((g (gensym)))
+    `(let ((,g (make-hash-table :test ,(case num
+                                             (0 '#'eq)
+                                             (1 '#'eql)
+                                             (2 '#'equal)
+                                             (3 '#'equalp)
+                                             (t '#'equal)))))
+       (setf ,@(do ((lst (read-delimited-list #\} stream t)
+                         (cddr lst))
+                    (acc nil))
+                   ((null lst) (nreverse acc))
+                   (push `(gethash ,(car lst) ,g) acc)
+                   (push (cadr lst) acc)))
+       ,g)))
+
+(set-dispatch-macro-character #\# #\{ #'sharp-left-brace)

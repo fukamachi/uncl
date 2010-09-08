@@ -4,6 +4,7 @@
   (defun read-symbol (stream)
     (let ((*readtable* r))
       (set-macro-character #\] (get-macro-character #\)))
+      (set-macro-character #\} (get-macro-character #\)))
       (read-preserving-whitespace stream))))
 
 (defun double-dot-symbol (symbol)

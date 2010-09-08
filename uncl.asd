@@ -15,6 +15,7 @@
                (:file "util")
                (:file "anonym-function")
                (:file "sharp-backquote")
+               (:file "hash-reader")
                (:file "defmacro")
                (:file "ppcre")
                (:file "special-form")
