@@ -83,6 +83,7 @@
   (define-macro-symbol cond acond2)
   (define-macro-symbol fn lambda)
   (define-macro-symbol let let2)
+  (define-macro-symbol let* let2*)
 
   ;; functions
   (dolist (alias aliases)

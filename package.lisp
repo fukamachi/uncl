@@ -28,6 +28,7 @@
            :if
            :cond
            :let
+           :let*
            :defmacro*
            :range
            :slurp

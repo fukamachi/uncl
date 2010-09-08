@@ -31,6 +31,14 @@
 (defmacro let2 (letargs &rest body)
   `(let ,(group letargs 2) ,@body))
 
+(defmacro let2* (letargs &rest body)
+  (if (null letargs) `(progn ,@body)
+      (destructuring-bind (x y &rest r) letargs
+        (if (listp x)
+            `(destructuring-bind ,x ,y
+                 (let2* ,(nthcdr 2 letargs) ,@body))
+            `(let ((,x ,y)) (let2* ,(nthcdr 2 letargs) ,@body))))))
+
 (defmacro alet (letargs &rest body)
   `(let ((this) ,@(group letargs 2))
      (setq this ,@(last body))
