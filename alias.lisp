@@ -7,9 +7,25 @@
 
 (defun symbol-reader-macro-reader (stream char)
   (unread-char char stream)
-  (let* ((s (read-symbol stream))
-         (f (get s 'symbol-reader-macro)))
-    (if f (funcall f stream s) s)))
+  (let ((s (read-symbol stream)))
+    (aif (get s 'symbol-reader-macro)
+         (funcall it stream s)
+         s)))
+
+(defun double-dot-symbol (symbol)
+  (cl-ppcre:register-groups-bind (st en)
+      ("^(.+?)\\.\\.(.+?)$" (symbol-name symbol))
+    `(range ,@(mapcar #'(lambda (s)
+                          (or (parse-integer s :junk-allowed t)
+                              (intern s)))
+                      (list st en)))))
+
+(defun double-dot-symbol-reader (stream char)
+  (unread-char char stream)
+  (let ((s (read-symbol stream)))
+    (if (symbolp s)
+        (double-dot-symbol s)
+        s)))
 
 (defun set-macro-symbol (symbol readfn)
   (setf (get symbol 'symbol-reader-macro) readfn)
@@ -64,7 +80,10 @@
 
 (defun init-readtable ()
   (map nil (lambda (c)
-             (set-macro-character c 'symbol-reader-macro-reader t))
+             (set-macro-character c #'double-dot-symbol-reader t))
+       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789")
+  (map nil (lambda (c)
+             (set-macro-character c #'symbol-reader-macro-reader t))
        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_")
 
   ;; special forms

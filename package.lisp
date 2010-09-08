@@ -29,6 +29,7 @@
            :cond
            :let
            :defmacro*
+           :range
            :slurp
 
            ;; for debug
