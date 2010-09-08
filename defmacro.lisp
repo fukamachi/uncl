@@ -28,7 +28,7 @@
               symbs)
          ,@body))))
 
-(defmacro defmacro! (name args &body body)
+(defmacro defmacro* (name args &body body)
   (let* ((os (remove-if-not #'o!-symbol-p args))
          (gs (mapcar #'o!-symbol-to-g!-symbol os)))
     `(defmacro/g! ,name ,args

@@ -28,7 +28,7 @@
            :if
            :cond
            :let
-           :defmacro
+           :defmacro*
            :slurp
 
            ;; for debug
@@ -75,6 +75,7 @@
            :use-package
            :defpackage
            :defun
+           :defmacro
            :apply
            :append
            :reverse

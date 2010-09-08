@@ -10,13 +10,13 @@
         (cons (coerce (nreverse chars) 'string)
               (segment-reader stream ch (- n 1))))))
 
-(defmacro! match-mode-ppcre-lambda-form (args%)
+(defmacro* match-mode-ppcre-lambda-form (args%)
   ``(lambda (,',str#)
       (cl-ppcre:scan
        ,(car ,args#)
        ,',str#)))
 
-(defmacro! subst-mode-ppcre-lambda-form (args%)
+(defmacro* subst-mode-ppcre-lambda-form (args%)
   ``(lambda (,',str#)
       (cl-ppcre:regex-replace-all
        ,(car ,args#)

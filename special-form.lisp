@@ -13,7 +13,7 @@
   `(labels ((self ,parms ,@body))
      #'self))
 
-(defmacro! dfn (&rest ds)
+(defmacro* dfn (&rest ds)
   `(lambda (&rest ,args#)
      (case (car ,args#)
        ,@(mapcar
@@ -37,7 +37,7 @@
      (lambda (&rest params)
        (apply this params))))
 
-(defmacro! acond (&rest clauses)
+(defmacro* acond (&rest clauses)
   (if (null clauses)
       nil
       (let ((cl1 (car clauses))
