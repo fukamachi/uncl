@@ -40,7 +40,6 @@
            :fn
            :def
            :call
-           :do
            :append!
            :reverse!
            :set!
@@ -79,6 +78,8 @@
            :apply
            :append
            :reverse
+           :progn
+           :prog1
            :+
            :-
            :*
