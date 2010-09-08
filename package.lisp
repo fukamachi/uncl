@@ -4,7 +4,7 @@
 
 (defpackage uncl
   (:nicknames :ucl)
-  (:use :cl :cl-ppcre :cl-interpol)
+  (:use :cl :cl-ppcre :cl-interpol :cl-utilities)
   (:import-from :cl-interpol
                 :*stream*
                 :*start-char*
@@ -68,6 +68,11 @@
            :array?
            :vector?
            :y/n?
+
+           ;; from CL-UTILITIES
+           :with-gensyms
+           :once-only
+           :compose
 
            ;; from COMMON-LISP
            :in-package

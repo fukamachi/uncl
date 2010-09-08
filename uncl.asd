@@ -9,7 +9,7 @@
   :version "1.0.0-SNAPSHOT"
   :author "Eitarow Fukamachi"
   :license "MIT"
-  :depends-on (:cl-ppcre :cl-interpol)
+  :depends-on (:cl-ppcre :cl-interpol :cl-utilities)
   :serial t
   :components ((:file "package")
                (:file "util")
