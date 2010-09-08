@@ -12,7 +12,7 @@
   :depends-on (:cl-ppcre :cl-interpol :cl-utilities)
   :serial t
   :components ((:file "package")
-               (:file "util")
+               (:file "helper")
                (:file "anonym-function")
                (:file "sharp-backquote")
                (:file "hash-reader")
@@ -21,7 +21,8 @@
                (:file "special-form")
                (:file "debug")
                (:file "string")
-               (:file "alias")))
+               (:file "alias")
+               (:file "contrib")))
 
 (defmethod asdf:perform :after ((op load-op) (c (eql (find-system :uncl))))
   (funcall (intern (symbol-name :init-readtable) (find-package :uncl))))

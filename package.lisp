@@ -16,12 +16,7 @@
                 :inner-reader
                 :read-char*
                 :*previous-readtables*)
-  (:export :flatten
-           :group
-           :set-macro-symbol
-           :define-macro-symbol
-           :init-readtable
-           :and
+  (:export :and
            :afn
            :dfn
            :alet
@@ -30,8 +25,6 @@
            :let
            :let*
            :defmacro*
-           :range
-           :slurp
 
            ;; for debug
            :mac
@@ -111,6 +104,12 @@
            :cddr
            :loop
            :format
+
+           ;; contrib
+           :flatten
+           :group
+           :range
+           :slurp
            ))
 
 (defpackage uncl-user

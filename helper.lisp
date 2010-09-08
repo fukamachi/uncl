@@ -28,14 +28,3 @@
                    (nreverse
                     (cons source acc))))))
     (if source (rec source nil) nil)))
-
-(defun range (start end)
-  (loop for i from start upto end collect i))
-
-(defun slurp-stream (stream)
-  (let ((seq (make-string (file-length stream))))
-    (read-sequence seq stream)
-    seq))
-
-(defun slurp (file)
-  (with-open-file (stream file) (slurp-stream stream)))
