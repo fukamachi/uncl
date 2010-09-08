@@ -1,5 +1,8 @@
 (in-package :uncl-user)
 
+(defun last (list)
+  (car (cl:last list)))
+
 (defun range (start end)
   (loop for i from start upto end collect i))
 

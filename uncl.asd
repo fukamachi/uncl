@@ -19,10 +19,10 @@
                (:file "defmacro")
                (:file "ppcre")
                (:file "special-form")
-               (:file "debug")
                (:file "string")
                (:file "alias")
-               (:file "contrib")))
+               (:file "contrib")
+               (:file "debug")))
 
 (defmethod asdf:perform :after ((op load-op) (c (eql (find-system :uncl))))
   (funcall (intern (symbol-name :init-readtable) (find-package :uncl))))
