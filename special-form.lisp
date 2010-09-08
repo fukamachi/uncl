@@ -35,8 +35,17 @@
   (if (null letargs) `(progn ,@body)
       (destructuring-bind (x y &rest r) letargs
         (if (listp x)
-            `(destructuring-bind ,x ,y
-                 (let2* ,(nthcdr 2 letargs) ,@body))
+            `(destructuring-bind
+                   ,(mapcar #'(lambda (s)
+                                (let ((str (symbol-name s)))
+                                  (if (string= str "&"
+                                               :start1 0
+                                               :end1 1)
+                                      (intern str :cl)
+                                      s)))
+                            x)
+                 ,y
+               (let2* ,(nthcdr 2 letargs) ,@body))
             `(let ((,x ,y)) (let2* ,(nthcdr 2 letargs) ,@body))))))
 
 (defmacro alet (letargs &rest body)
