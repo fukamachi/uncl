@@ -13,13 +13,6 @@
                               (intern s)))
                       (list st en)))))
 
-(defun double-dot-symbol-reader (stream char)
-  (unread-char char stream)
-  (let ((s (read-symbol stream)))
-    (if (symbolp s)
-        (double-dot-symbol s)
-        s)))
-
 (defun symbol-reader-macro-reader (stream char)
   (unread-char char stream)
   (let ((s (read-symbol stream)))
