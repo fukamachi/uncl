@@ -5,13 +5,6 @@
     (let ( (*readtable* r) )
       (read-preserving-whitespace stream))))
 
-(defun symbol-reader-macro-reader (stream char)
-  (unread-char char stream)
-  (let ((s (read-symbol stream)))
-    (aif (get s 'symbol-reader-macro)
-         (funcall it stream s)
-         s)))
-
 (defun double-dot-symbol (symbol)
   (cl-ppcre:register-groups-bind (st en)
       ("^(.+?)\\.\\.(.+?)$" (symbol-name symbol))
@@ -26,6 +19,14 @@
     (if (symbolp s)
         (double-dot-symbol s)
         s)))
+
+(defun symbol-reader-macro-reader (stream char)
+  (unread-char char stream)
+  (let ((s (read-symbol stream)))
+    (acond2
+     (get s 'symbol-reader-macro) (funcall it stream s)
+     (and (symbolp s) (double-dot-symbol s)) it
+     t s)))
 
 (defun set-macro-symbol (symbol readfn)
   (setf (get symbol 'symbol-reader-macro) readfn)
@@ -80,11 +81,8 @@
 
 (defun init-readtable ()
   (map nil (lambda (c)
-             (set-macro-character c #'double-dot-symbol-reader t))
-       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789")
-  (map nil (lambda (c)
              (set-macro-character c #'symbol-reader-macro-reader t))
-       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_")
+       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&_=+-*/|:<>.?0123456789")
 
   ;; special forms
   (define-macro-symbol if aif)
