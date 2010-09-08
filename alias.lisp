@@ -78,7 +78,7 @@
 (defun init-readtable ()
   (map nil (lambda (c)
              (set-macro-character c #'symbol-reader-macro-reader t))
-       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&_=+-*/|:<>.?0123456789")
+       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@$%^&_=+-*/|:<>.?0123456789")
 
   ;; special forms
   (define-macro-symbol if aif)
