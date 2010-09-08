@@ -1,8 +1,9 @@
 (in-package :uncl)
 
-(let ( (r (copy-readtable nil)) )
+(let ((r (copy-readtable nil)))
   (defun read-symbol (stream)
-    (let ( (*readtable* r) )
+    (let ((*readtable* r))
+      (set-macro-character #\] (get-macro-character #\)))
       (read-preserving-whitespace stream))))
 
 (defun double-dot-symbol (symbol)
