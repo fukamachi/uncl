@@ -42,6 +42,7 @@
            :fn
            :def
            :call
+           :map
            :append!
            :reverse!
            :set!
@@ -82,6 +83,7 @@
            :defpackage
            :defun
            :defmacro
+           :quote
            :apply
            :append
            :reverse

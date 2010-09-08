@@ -37,6 +37,7 @@
   '((def defvar)
     (call funcall)
     (y/n? y-or-n-p)
+    (map mapcar)
     (append! nconc)
     (reverse! nreverse)
     (set! setf)
