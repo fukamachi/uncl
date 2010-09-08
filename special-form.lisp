@@ -1,8 +1,9 @@
 (in-package :uncl)
 
 (defmacro aif (test-form then-form &optional else-form)
-  `(let ((it ,test-form))
-     (if it ,then-form ,else-form)))
+  (let ((it-symb (intern "IT" *package*)))
+    `(let ((,it-symb ,test-form))
+       (if ,it-symb ,then-form ,else-form))))
 
 (defmacro and (&rest args)
   (cond ((null args) t)
