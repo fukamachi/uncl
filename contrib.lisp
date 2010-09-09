@@ -6,6 +6,9 @@
 (defun range (start end)
   (loop for i from start upto end collect i))
 
+(defun sort* (seq pred &key key)
+  (cl:sort (copy-seq seq) pred :key key))
+
 (defun slurp-stream (stream)
   (cl:let ((seq (cl:make-string (cl:file-length stream))))
     (cl:read-sequence seq stream)

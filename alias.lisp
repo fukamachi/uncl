@@ -40,6 +40,7 @@
     (mlet macrolet)
     (y/n? y-or-n-p)
     (yes/no? yes-or-no-p)
+    (sort! sort)
     (append! nconc)
     (reverse! nreverse)
     (filter remove-if-not)
@@ -96,6 +97,7 @@
   (define-macro-symbol fn lambda)
   (define-macro-symbol let let2)
   (define-macro-symbol let* let2*)
+  (define-macro-symbol sort sort*)
 
   ;; functions
   (dolist (alias aliases)

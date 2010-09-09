@@ -650,6 +650,7 @@
            :software-version
            :some
            :sort
+           :sort!
            :special-operator?
            :sqrt
            :stable-sort
