@@ -69,3 +69,6 @@
 
 (defmacro acond2 (&rest clauses)
   `(acond ,@(group clauses 2)))
+
+(defmacro label (label-fn &rest body)
+  `(labels (,label-fn) ,@body))

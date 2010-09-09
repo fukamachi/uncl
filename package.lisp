@@ -367,6 +367,7 @@
            :invoke-restart-interactively
            :isqrt
            :keyword?
+           :label
            :labels
            :lambda
            :fn
