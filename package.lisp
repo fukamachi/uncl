@@ -100,6 +100,7 @@
            :break
            :broadcast-stream-streams
            :butlast
+           :butlast!
            :byte
            :byte-position
            :byte-size
@@ -149,9 +150,6 @@
            :char-int
            :char-less?
            :char-name
-           :char-not-equal
-           :char-not-greater?
-           :char-not-less?
            :char-upcase
            :char/=
            :char<
@@ -471,26 +469,11 @@
            :multiple-value-setq
            :name-char
            :namestring
-           :nbutlast
-           :nconc
            :nintersection
            :ninth
            :no-applicable-method
            :no-next-method
            :not
-           :notany
-           :notevery
-           :nreconc
-           :nset-difference
-           :nset-exclusive-or
-           :nstring-capitalize
-           :nstring-downcase
-           :nstring-upcase
-           :nsublis
-           :nsubst
-           :nsubst-if
-           :nsubstitute
-           :nsubstitute-if
            :nth
            :nth-value
            :nthcdr
@@ -601,6 +584,7 @@
            :return
            :return-from
            :revappend
+           :revappend!
            :reverse
            :reverse!
            :room
@@ -616,8 +600,10 @@
            :second
            :set
            :set-difference
+           :set-difference!
            :set-dispatch-macro-character
            :set-exclusive-or
+           :set-exclusive-or!
            :set-macro-character
            :set-pprint-dispatch
            :set-syntax-from-char
@@ -663,16 +649,17 @@
            :stream?
            :string
            :string-capitalize
+           :string-capitalize!
            :string-downcase
+           :string-downcase!
            :string-equal
            :string-greater?
            :string-left-trim
            :string-less?
-           :string-not-equal
-           :string-not-greater?
            :string-right-trim
            :string-trim
            :string-upcase
+           :string-upcase!
            :string/=
            :string<
            :string<=
@@ -681,12 +668,17 @@
            :string>=
            :string?
            :sublis
+           :sublis!
            :subseq
            :subset?
            :subst
+           :subst!
            :subst-if
+           :subst!-if
            :substitute
+           :substitute!
            :substitute-if
+           :substitute!-if
            :subtype?
            :svref
            :sxhash
@@ -741,8 +733,8 @@
            :values
            :values-list
            :vector
-           :vector-pop
-           :vector-push
+           :vector-pop!
+           :vector-push!
            :vector-push-extend
            :vector?
            :warn
