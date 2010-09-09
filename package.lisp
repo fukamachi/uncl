@@ -417,7 +417,7 @@
            :macro-function
            :mexpand-all
            :mexpand
-           :macrolet
+           :mlet
            :make-array
            :make-broadcast-stream
            :make-concatenated-stream

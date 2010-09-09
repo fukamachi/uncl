@@ -37,6 +37,7 @@
 (defparameter aliases
   '((def defvar)
     (call funcall)
+    (mlet macrolet)
     (y/n? y-or-n-p)
     (yes/no? yes-or-no-p)
     (append! nconc)
