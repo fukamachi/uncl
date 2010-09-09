@@ -9,6 +9,9 @@
 (defun sort* (seq pred &key key)
   (cl:sort (copy-seq seq) pred :key key))
 
+(defun string* (&rest args)
+  (apply #'concatenate 'string (mapcar #'string-downcase args)))
+
 (defun slurp-stream (stream)
   (cl:let ((seq (cl:make-string (cl:file-length stream))))
     (cl:read-sequence seq stream)

@@ -155,6 +155,7 @@
   (define-macro-symbol let let2)
   (define-macro-symbol let* let2*)
   (define-macro-symbol sort sort*)
+  (define-macro-symbol string string*)
 
   ;; functions
   (dolist (alias aliases)
