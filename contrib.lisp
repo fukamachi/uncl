@@ -1,4 +1,4 @@
-(in-package :uncl-user)
+(in-package :uncl)
 
 (defun last (list)
   (car (cl:last list)))
