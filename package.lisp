@@ -760,8 +760,8 @@
            :write-sequence
            :write-string
            :write-to-string
-           :y/n?
-           :yes/no?
+           :y-or-n?
+           :yes-or-no?
            :zero?
 
            ;; COMMON-LISP varialbes
