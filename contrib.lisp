@@ -12,6 +12,9 @@
 (defun string* (&rest args)
   (apply #'concatenate 'string (mapcar #'string-downcase args)))
 
+(defun mapcan (f &rest lists)
+  (apply #'append (apply #'mapcar f lists)))
+
 (defun slurp-stream (stream)
   (cl:let ((seq (cl:make-string (cl:file-length stream))))
     (cl:read-sequence seq stream)

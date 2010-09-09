@@ -39,6 +39,7 @@
     (call funcall)
     (mlet macrolet)
     (sort! sort)
+    (mapcan! mapcan)
     (append! nconc)
     (revappend! nreconc)
     (butlast! nbutlast)

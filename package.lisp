@@ -444,6 +444,7 @@
            :map-into
            :mapc
            :mapcan
+           :mapcan!
            :mapcar
            :mapcon
            :maphash
