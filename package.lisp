@@ -224,8 +224,6 @@
            :deftype
            :defun
            :def
-           :delete
-           :delete-duplicates
            :delete-file
            :delete-if
            :delete-package
@@ -570,7 +568,9 @@
            :rem!
            :remhash
            :remove
+           :remove!
            :remove-duplicates
+           :remove-duplicates!
            :remove-if
            :remove-method
            :remprop

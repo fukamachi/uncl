@@ -54,6 +54,8 @@
     (substitute nsubstitute)
     (substitute!-if nsubstitute-if)
     (reverse! nreverse)
+    (remove! delete)
+    (remove-duplicates delete-duplicates)
     (filter remove-if-not)
     (rotate! rotatef)
     (setcar! rplaca)
