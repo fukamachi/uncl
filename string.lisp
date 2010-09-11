@@ -5,7 +5,7 @@
         (*start-char* char)
         (*term-char* char)
         (*pair-level* 0)
-        (*inner-delimitoers* nil)
+        (*inner-delimiters* nil)
         *saw-backslash*
         *readtable-copy*)
     (prog1 
