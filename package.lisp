@@ -226,7 +226,7 @@
            :defstruct
            :deftype
            :defun
-           :def
+           :defvar
            :delete-file
            :delete-if
            :delete-package

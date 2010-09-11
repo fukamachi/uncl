@@ -35,8 +35,7 @@
                          ',to)))
 
 (defparameter aliases
-  '((def defvar)
-    (call funcall)
+  '((call funcall)
     (mlet macrolet)
     (sort! sort)
     (mapcan! mapcan)
