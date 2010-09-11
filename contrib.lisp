@@ -9,9 +9,6 @@
 (defun sort* (seq pred &key key)
   (cl:sort (copy-seq seq) pred :key key))
 
-(defun string* (&rest args)
-  (apply #'concatenate 'string (mapcar #'string-downcase args)))
-
 (defun mapcan (f &rest lists)
   (apply #'append (apply #'mapcar f lists)))
 

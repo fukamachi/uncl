@@ -153,6 +153,7 @@
               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@$%^&_=+-*/|:<>.?0123456789")
        (:macro-char #\[ #'anonym-function)
        (:macro-char #\] (get-macro-character #\)))
+       (:macro-char #\" #'string-reader)
        (:dispatch-macro-char #\# #\~ #'sharp-tilde-reader)
        (:dispatch-macro-char #\# #\{ #'sharp-left-brace)
        (:dispatch-macro-char #\# #\` #'sharp-backquote-reader))
@@ -175,11 +176,8 @@
 (define-macro-symbol let let2)
 (define-macro-symbol let* let2*)
 (define-macro-symbol sort sort*)
-(define-macro-symbol string string*)
 (define-macro-symbol require require*)
 
 ;; functions
 (dolist (alias aliases)
   (apply #'defalias alias))
-
-(enable-escape-sequence)
