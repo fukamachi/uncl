@@ -20,8 +20,8 @@
                (:file "ppcre")
                (:file "special-form")
                (:file "string")
-               (:file "alias")
                (:file "contrib")
+               (:file "alias")
                (:file "debug")))
 
 (defmethod asdf:perform :after ((op load-op) (c (eql (find-system :uncl))))
