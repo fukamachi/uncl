@@ -148,9 +148,14 @@
 
 #.`(defreadtable uncl:syntax
        (:merge :standard)
-     ,@(map 'list #'(lambda (c)
-                      `(:macro-char ,c #'symbol-reader-macro-reader t))
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@$%^&_=+-*/|:<>.?0123456789"))
+       ,@(map 'list #'(lambda (c)
+                        `(:macro-char ,c #'symbol-reader-macro-reader t))
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@$%^&_=+-*/|:<>.?0123456789")
+       (:macro-char #\[ #'anonym-function)
+       (:macro-char #\] (get-macro-character #\)))
+       (:dispatch-macro-char #\# #\~ #'sharp-tilde-reader)
+       (:dispatch-macro-char #\# #\{ #'sharp-left-brace)
+       (:dispatch-macro-char #\# #\` #'sharp-backquote-reader))
 
 (defun enable-uncl-syntax ()
   (in-readtable uncl:syntax))
@@ -162,7 +167,6 @@
   (disable-uncl-syntax)
   (cl:require module-name pathname-list)
   (enable-uncl-syntax))
-
 
 ;; special forms
 (define-macro-symbol if aif)

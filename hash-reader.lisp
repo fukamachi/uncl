@@ -16,5 +16,3 @@
                    (push `(gethash ,(car lst) ,g) acc)
                    (push (cadr lst) acc)))
        ,g)))
-
-(set-dispatch-macro-character #\# #\{ #'sharp-left-brace)

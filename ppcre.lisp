@@ -23,7 +23,7 @@
        ,',str#
        ,(cadr ,args#))))
 
-(defun |#~-reader| (stream sub-char numarg)
+(defun sharp-tilde-reader (stream sub-char numarg)
   (declare (ignore sub-char numarg))
   (let ((mode-char (read-char stream)))
     (cond
@@ -38,10 +38,3 @@
                         (read-char stream)
                         2)))
       (t (error "Unknown #~~ mode character")))))
-
-(defun make-pairs (list)
-  (if (null list) list
-      (destructuring-bind (x y &rest rest) list
-        (cons `(,x ,y) (make-pairs rest)))))
-
-(set-dispatch-macro-character #\# #\~ #'|#~-reader|)

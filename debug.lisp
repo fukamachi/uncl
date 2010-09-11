@@ -19,6 +19,6 @@
                        args)
         (declare
          ,@(mapcar
-            #`(type ,(car $1) ,(cadr $1))
+            #'(lambda ($1) `(type ,(car $1) ,(cadr $1)))
             (remove-if-not #'consp args)))
         ,@body))))
