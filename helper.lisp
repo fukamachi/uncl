@@ -28,3 +28,6 @@
                    (nreverse
                     (cons source acc))))))
     (if source (rec source nil) nil)))
+
+(defun whitespacep (char)
+  (member char '(#\Space #\Tab #\Newline #\Return #\Linefeed) :test #'char=))

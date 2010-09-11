@@ -10,16 +10,27 @@
         (cons (coerce (nreverse chars) 'string)
               (segment-reader stream ch (- n 1))))))
 
-(defmacro* match-mode-ppcre-lambda-form (args%)
+(defun modifier-reader (stream)
+  (let ((char (read-char stream nil)))
+    (unread-char char stream)
+    (unless (whitespacep char)
+      (read-preserving-whitespace stream))))
+
+(defun regex/modifier (regex modifier)
+  (format nil "~@[(?~(~a~))~]~a" modifier regex))
+
+(defmacro* match-mode-ppcre-lambda-form (args% modifier)
   ``(lambda (,',str#)
       (cl-ppcre:scan
-       ,(car ,args#)
+       ,(regex/modifier (car ,args#) ,modifier)
        ,',str#)))
 
-(defmacro* subst-mode-ppcre-lambda-form (args%)
+(defmacro* subst-mode-ppcre-lambda-form (args% modifier%)
   ``(lambda (,',str#)
-      (cl-ppcre:regex-replace-all
-       ,(car ,args#)
+      (,(if (find #\G (symbol-name ,modifier#))
+            'cl-ppcre:regex-replace-all
+            'cl-ppcre:regex-replace)
+       ,(regex/modifier (car ,args#) (delete #\G (symbol-name ,modifier#)))
        ,',str#
        ,(cadr ,args#))))
 
@@ -31,10 +42,12 @@
        (match-mode-ppcre-lambda-form
         (segment-reader stream
                         (read-char stream)
-                        1)))
+                        1)
+        (modifier-reader stream)))
       ((char= mode-char #\s)
        (subst-mode-ppcre-lambda-form
         (segment-reader stream
                         (read-char stream)
-                        2)))
+                        2)
+        (modifier-reader stream)))
       (t (error "Unknown #~~ mode character")))))
