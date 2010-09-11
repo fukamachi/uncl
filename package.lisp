@@ -888,7 +888,6 @@
            :group
            :filter
            :range
-           :slurp
            ))
 
 (defpackage uncl-user

@@ -11,11 +11,3 @@
 
 (defun mapcan (f &rest lists)
   (apply #'append (apply #'mapcar f lists)))
-
-(defun slurp-stream (stream)
-  (cl:let ((seq (cl:make-string (cl:file-length stream))))
-    (cl:read-sequence seq stream)
-    seq))
-
-(defun slurp (file)
-  (cl:with-open-file (stream file) (slurp-stream stream)))
