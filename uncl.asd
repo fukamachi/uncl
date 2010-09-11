@@ -9,7 +9,7 @@
   :version "1.0.0-SNAPSHOT"
   :author "Eitarow Fukamachi"
   :license "MIT"
-  :depends-on (:cl-ppcre :cl-interpol :cl-utilities)
+  :depends-on (:cl-ppcre :cl-interpol :cl-utilities :named-readtables)
   :serial t
   :components ((:file "package")
                (:file "helper")
@@ -25,4 +25,4 @@
                (:file "debug")))
 
 (defmethod asdf:perform :after ((op load-op) (c (eql (find-system :uncl))))
-  (funcall (intern (symbol-name :init-readtable) (find-package :uncl))))
+  (funcall (intern (symbol-name :enable-uncl-syntax) (find-package :uncl))))

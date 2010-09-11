@@ -146,22 +146,36 @@
      (setf (symbol-function to) (symbol-function from)))
     (t (define-macro-symbol from to))))
 
-(defun init-readtable ()
-  (map nil (lambda (c)
-             (set-macro-character c #'symbol-reader-macro-reader t))
-       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@$%^&_=+-*/|:<>.?0123456789")
+#.`(defreadtable uncl:syntax
+       (:merge :standard)
+     ,@(map 'list #'(lambda (c)
+                      `(:macro-char ,c #'symbol-reader-macro-reader t))
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@$%^&_=+-*/|:<>.?0123456789"))
 
-  ;; special forms
-  (define-macro-symbol if aif)
-  (define-macro-symbol cond acond2)
-  (define-macro-symbol fn lambda)
-  (define-macro-symbol let let2)
-  (define-macro-symbol let* let2*)
-  (define-macro-symbol sort sort*)
-  (define-macro-symbol string string*)
+(defun enable-uncl-syntax ()
+  (in-readtable uncl:syntax))
 
-  ;; functions
-  (dolist (alias aliases)
-    (apply #'defalias alias))
+(defun disable-uncl-syntax ()
+  (in-readtable :standard))
 
-  (enable-escape-sequence))
+(defun require* (module-name &optional pathname-list)
+  (disable-uncl-syntax)
+  (cl:require module-name pathname-list)
+  (enable-uncl-syntax))
+
+
+;; special forms
+(define-macro-symbol if aif)
+(define-macro-symbol cond acond2)
+(define-macro-symbol fn lambda)
+(define-macro-symbol let let2)
+(define-macro-symbol let* let2*)
+(define-macro-symbol sort sort*)
+(define-macro-symbol string string*)
+(define-macro-symbol require require*)
+
+;; functions
+(dolist (alias aliases)
+  (apply #'defalias alias))
+
+(enable-escape-sequence)

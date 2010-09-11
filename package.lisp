@@ -4,7 +4,10 @@
 
 (defpackage uncl
   (:nicknames :ucl)
-  (:use :cl :cl-ppcre :cl-interpol :cl-utilities)
+  (:use :cl :cl-ppcre :cl-interpol :cl-utilities :named-readtables)
+  (:import-from :named-readtables
+                :defreadtable
+                :in-readtable)
   (:import-from :cl-interpol
                 :*stream*
                 :*start-char*
@@ -871,6 +874,13 @@
            :single-float-epsilon
            :single-float-negative-epsilon
            :t
+
+           ;; named-readtable
+           :in-readtable
+           :syntax
+           :enable-uncl-syntax
+           :disable-uncl-syntax
+           :require
 
            ;; contrib
            :flatten
