@@ -37,7 +37,7 @@
 (defparameter aliases
   '((call funcall)
     (mlet macrolet)
-    (sort! sort)
+    (sort! cl:sort)
     (mapcan! mapcan)
     (append! nconc)
     (revappend! nreconc)
@@ -163,7 +163,7 @@
 (defun disable-uncl-syntax ()
   (in-readtable :standard))
 
-(defun require* (module-name &optional pathname-list)
+(defun require (module-name &optional pathname-list)
   (disable-uncl-syntax)
   (cl:require module-name pathname-list)
   (enable-uncl-syntax))
@@ -174,8 +174,6 @@
 (define-macro-symbol fn lambda)
 (define-macro-symbol let let2)
 (define-macro-symbol let* let2*)
-(define-macro-symbol sort sort*)
-(define-macro-symbol require require*)
 
 ;; functions
 (dolist (alias aliases)

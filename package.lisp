@@ -5,6 +5,7 @@
 (defpackage uncl
   (:nicknames :ucl)
   (:use :cl :cl-ppcre :cl-interpol :cl-utilities :named-readtables)
+  (:shadow :cl :sort :require)
   (:import-from :named-readtables
                 :defreadtable
                 :in-readtable)
