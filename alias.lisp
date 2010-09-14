@@ -111,25 +111,9 @@
      (setf (symbol-function to) (symbol-function from)))
     (t (error "Cannot set an alias ~a for ~a" to from))))
 
-#.`(defreadtable uncl:syntax
-       (:merge :standard)
-       (:macro-char #\[ #'anonym-function)
-       (:macro-char #\] (get-macro-character #\)))
-       (:macro-char #\" #'string-reader)
-       (:dispatch-macro-char #\# #\~ #'sharp-tilde-reader)
-       (:dispatch-macro-char #\# #\{ #'sharp-left-brace)
-       (:dispatch-macro-char #\# #\` #'sharp-backquote-reader))
-
-(defun enable-uncl-syntax ()
-  (in-readtable uncl:syntax))
-
-(defun disable-uncl-syntax ()
-  (in-readtable :standard))
-
-(defun require (module-name &optional pathname-list)
-  (disable-uncl-syntax)
-  (cl:require module-name pathname-list)
-  (enable-uncl-syntax))
+;; functions
+(dolist (alias aliases)
+  (apply #'defalias alias))
 
 ;; special forms
 (defun define-alias-symbol (to from)
@@ -143,6 +127,7 @@
 (define-alias-symbol 'let 'let2)
 (define-alias-symbol 'let* 'let2*)
 
-;; functions
-(dolist (alias aliases)
-  (apply #'defalias alias))
+(defun require (module-name &optional pathname-list)
+  (disable-uncl-syntax)
+  (cl:require module-name pathname-list)
+  (enable-uncl-syntax))

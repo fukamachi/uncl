@@ -22,6 +22,7 @@
                (:file "special-form")
                (:file "string")
                (:file "contrib")
+               (:file "reader")
                (:file "alias")
                (:file "debug")))
 
