@@ -13,6 +13,7 @@
   :serial t
   :components ((:file "package")
                (:file "sb-reader")
+               (:file "double-dot")
                (:file "helper")
                (:file "anonym-function")
                (:file "sharp-backquote")
