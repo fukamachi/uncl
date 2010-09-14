@@ -4,7 +4,7 @@ Un-Common Lisp is a new dialect of Lisp.
 
 ## Dependencies
 
-UnCL only works on [SBCL](http://www.sbcl.org/) now.  
+UnCL only works on [SBCL](http://www.sbcl.org/).  
 Depends on cl-ppcre, cl-interpol, cl-utilities and named-readtables.
 
 ## Installation
@@ -74,7 +74,14 @@ UnCL's <code>if</code> is anaphoric one.
       (get-name it) ;; `it' refers a result of the conditional part
       'not-found)
 
-So is <code>cond</code> and <code>and</code>.
+So are <code>cond</code> and <code>and</code>.
+
+### Double dot syntax
+
+    '(1..10)
+    => (1 2 3 4 5 6 7 8 9 10)
+    (mapcar [* _ 2] '(1..10))
+    => (2 4 6 8 10 12 14 16 18 20)
 
 ## FAQ
 
