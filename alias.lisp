@@ -1,39 +1,5 @@
 (in-package :uncl)
 
-(let ((r (copy-readtable nil)))
-  (defun read-symbol (stream)
-    (let ((*readtable* r))
-      (set-macro-character #\] (get-macro-character #\)))
-      (set-macro-character #\} (get-macro-character #\)))
-      (read-preserving-whitespace stream))))
-
-(defun double-dot-symbol (symbol)
-  (cl-ppcre:register-groups-bind (st en)
-      ("^(.+?)\\.\\.(.+?)$" (symbol-name symbol))
-    `(range ,@(mapcar #'(lambda (s)
-                          (or (parse-integer s :junk-allowed t)
-                              (intern s)))
-                      (list st en)))))
-
-(defun symbol-reader-macro-reader (stream char)
-  (unread-char char stream)
-  (let ((s (read-symbol stream)))
-    (acond2
-     (not (symbolp s)) s
-     (get s 'symbol-reader-macro) (funcall it stream s)
-     (double-dot-symbol s) it
-     t s)))
-
-(defun set-macro-symbol (symbol readfn)
-  (setf (get symbol 'symbol-reader-macro) readfn)
-  t)
-
-(defmacro define-macro-symbol (from to)
-  `(set-macro-symbol ',from
-                     #'(lambda (stream symbol)
-                         (declare (ignore stream symbol))
-                         ',to)))
-
 (defparameter aliases
   '((call funcall)
     (mlet macrolet)
@@ -143,13 +109,10 @@
      (setf (macro-function to) (macro-function from)))
     ((symbol-function from)
      (setf (symbol-function to) (symbol-function from)))
-    (t (define-macro-symbol from to))))
+    (t (error "Cannot set an alias ~a for ~a" to from))))
 
 #.`(defreadtable uncl:syntax
        (:merge :standard)
-       ,@(map 'list #'(lambda (c)
-                        `(:macro-char ,c #'symbol-reader-macro-reader t))
-              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@$%^&_=+-*/|:<>.?0123456789")
        (:macro-char #\[ #'anonym-function)
        (:macro-char #\] (get-macro-character #\)))
        (:macro-char #\" #'string-reader)
@@ -169,11 +132,16 @@
   (enable-uncl-syntax))
 
 ;; special forms
-(define-macro-symbol if aif)
-(define-macro-symbol cond acond2)
-(define-macro-symbol fn lambda)
-(define-macro-symbol let let2)
-(define-macro-symbol let* let2*)
+(defun define-alias-symbol (to from)
+  (setq sb-impl::*read-after-hook-symbol-functions*
+        (nconc sb-impl::*read-after-hook-symbol-functions*
+               (list (lambda (symb) (and (string= symb to) from))))))
+
+(define-alias-symbol 'fn 'lambda)
+(define-alias-symbol 'if 'aif)
+(define-alias-symbol 'cond 'acond2)
+(define-alias-symbol 'let 'let2)
+(define-alias-symbol 'let* 'let2*)
 
 ;; functions
 (dolist (alias aliases)
