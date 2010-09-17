@@ -76,12 +76,17 @@ UnCL's <code>if</code> is anaphoric one.
 
 So are <code>cond</code> and <code>and</code>.
 
-### Double dot syntax
+### Useful functions
 
-    '(1..10)
-    => (1 2 3 4 5 6 7 8 9 10)
-    (mapcar [* _ 2] '(1..10))
+* Double dot
+
+    (0.. 10)
+    => (0 1 2 3 4 5 6 7 8 9 10)
+    (mapcar [* _ 2] (1.. 10))
     => (2 4 6 8 10 12 14 16 18 20)
+    (let (start 18 end 20)
+      (n.. start end))
+    => (18 19 20)
 
 ## FAQ
 

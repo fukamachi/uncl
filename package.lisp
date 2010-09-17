@@ -888,7 +888,9 @@
            :flatten
            :group
            :filter
-           :range
+           :n..
+           :1..
+           :0..
            ))
 
 (defpackage uncl-user

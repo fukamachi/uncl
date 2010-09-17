@@ -28,3 +28,8 @@
        for result = (funcall f expr) then (funcall f expr)
        until result
        finally (return (or result expr))))
+
+(defmethod read-after-hook ((expr cons))
+  (if (backq-expression-p expr) expr
+      (cons (read-after-hook (car expr))
+            (read-after-hook (cdr expr)))))

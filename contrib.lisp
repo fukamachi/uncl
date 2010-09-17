@@ -3,9 +3,6 @@
 (defun last (list)
   (car (cl:last list)))
 
-(defun range (start end)
-  (loop for i from start upto end collect i))
-
 (defun sort (seq pred &key key)
   (cl:sort (copy-seq seq) pred :key key))
 
