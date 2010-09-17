@@ -115,19 +115,31 @@
 (dolist (alias aliases)
   (apply #'defalias alias))
 
-;; special forms
-(defun define-alias-symbol (to from)
-  (setq sb-impl::*read-after-hook-symbol-functions*
-        (nconc sb-impl::*read-after-hook-symbol-functions*
-               (list (lambda (symb) (and (string= symb to) from))))))
-
-(define-alias-symbol 'fn 'lambda)
-(define-alias-symbol 'if 'aif)
-(define-alias-symbol 'cond 'acond2)
-(define-alias-symbol 'let 'let2)
-(define-alias-symbol 'let* 'let2*)
-
 (defun require (module-name &optional pathname-list)
   (disable-uncl-syntax)
   (cl:require module-name pathname-list)
   (enable-uncl-syntax))
+
+(in-package :sb-impl)
+
+(sb-ext:unlock-package :sb-int)
+
+(setf (symbol-function '%simple-eval-in-lexenv) (symbol-function 'simple-eval-in-lexenv))
+(fmakunbound 'simple-eval-in-lexenv)
+
+(defmethod simple-eval-in-lexenv (original-exp lexenv)
+  (%simple-eval-in-lexenv original-exp lexenv))
+
+(defmethod simple-eval-in-lexenv ((original-exp cons) lexenv)
+  (%simple-eval-in-lexenv
+   (case (car original-exp)
+     ((uncl:fn) `(lambda ,@(cdr original-exp)))
+     ((if) `(,(intern (symbol-name 'aif) :uncl) ,@(cdr original-exp)))
+     ((cond) `(,(intern (symbol-name 'acond2) :uncl) ,@(cdr original-exp)))
+     ((let) `(,(intern (symbol-name 'let2) :uncl) ,@(cdr original-exp)))
+     ((let*) `(,(intern (symbol-name 'let2*) :uncl) ,@(cdr original-exp)))
+     (t (if (and (consp (car original-exp))
+                 (eq (caar original-exp) 'uncl:fn))
+            `((lambda ,@(cdar original-exp)) ,@(cdr original-exp))
+            original-exp)))
+   lexenv))

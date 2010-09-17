@@ -1,8 +1,8 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (let ((*standard-output* (make-broadcast-stream)))
     (require 'asdf)
-    (require 'uncl)
-    (require 'lisp-unit)))
+    (require 'lisp-unit)
+    (require 'uncl)))
 
 ;;====================
 ;; Initialize
@@ -15,7 +15,7 @@
 ;; Test Start
 ;;====================
 (define-test uncl-test
-  (assert-eq 'fn 'lambda)
+  ;(assert-eq 'fn 'lambda)
   (assert-equal "hoge\n" (concatenate 'string "hoge" (string #\Newline)))
   (assert-equal 5 (call #'last '(1 2 3 4 5)))
   (assert-equal '(1 2 3 4 5) (1.. 5))

@@ -12,7 +12,7 @@
   :depends-on (:cl-ppcre :cl-interpol :cl-utilities :named-readtables)
   :serial t
   :components ((:file "package")
-               (:file "sb-reader")
+               ;(:file "sb-reader")
                (:file "double-dot")
                (:file "helper")
                (:file "anonym-function")
