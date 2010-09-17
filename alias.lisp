@@ -9,20 +9,25 @@
   (%simple-eval-in-lexenv original-exp lexenv))
 
 (defmethod simple-eval-in-lexenv ((original-exp cons) lexenv)
-  (%simple-eval-in-lexenv
-   (case (car original-exp)
-     ((uncl:fn) `(lambda ,@(cdr original-exp)))
-     ((if) `(,(intern (symbol-name 'aif) :uncl) ,@(cdr original-exp)))
-     ((cond) `(,(intern (symbol-name 'acond2) :uncl) ,@(cdr original-exp)))
-     ((let) `(,(intern (symbol-name 'let2) :uncl) ,@(cdr original-exp)))
-     ((let*) `(,(intern (symbol-name 'let2*) :uncl) ,@(cdr original-exp)))
-     (t (cond
-          ((and (consp (car original-exp))
-                (eq (caar original-exp) 'uncl:fn))
-           `((lambda ,@(cdar original-exp)) ,@(cdr original-exp)))
-          ((keywordp (car original-exp)) `(gethash ,@original-exp))
-          (t original-exp))))
-   lexenv))
+  ;; FIXME: this might be slow
+  (if (or (eq *package* (find-package :uncl))
+          (eq *package* (find-package :uncl-user)))
+      (%simple-eval-in-lexenv
+       (case (car original-exp)
+         ((not (string= :uncl-user (package-name *package*))) original-exp)
+         ((uncl:fn) `(lambda ,@(cdr original-exp)))
+         ((if) `(,(intern (symbol-name 'aif) :uncl) ,@(cdr original-exp)))
+         ((cond) `(,(intern (symbol-name 'acond2) :uncl) ,@(cdr original-exp)))
+         ((let) `(,(intern (symbol-name 'let2) :uncl) ,@(cdr original-exp)))
+         ((let*) `(,(intern (symbol-name 'let2*) :uncl) ,@(cdr original-exp)))
+         (t (cond
+              ((and (consp (car original-exp))
+                    (eq (caar original-exp) 'uncl:fn))
+               `((lambda ,@(cdar original-exp)) ,@(cdr original-exp)))
+              ((keywordp (car original-exp)) `(gethash ,@original-exp))
+              (t original-exp))))
+       lexenv)
+      (%simple-eval-in-lexenv original-exp lexenv)))
 
 (setf (symbol-function '%symbol-function) (symbol-function 'symbol-function))
 (setf (symbol-function '%apply) (symbol-function 'apply))
