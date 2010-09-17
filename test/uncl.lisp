@@ -25,6 +25,7 @@
   (assert-equal '(1 3 5) (filter #'odd? '(1 2 3 4 5)))
   ;; FIXME: this fails only in unit tests
   ;(assert-equal '(a b (e d c)) (let* ((x y &rest z) '(a b c d e)) (list x y (reverse z))))
+  ;(assert-eq 10 (:a #{:a 10 :b 20}))
   )
 
 ;;====================

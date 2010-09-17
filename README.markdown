@@ -76,9 +76,16 @@ UnCL's <code>if</code> is anaphoric one.
 
 So are <code>cond</code> and <code>and</code>.
 
+### Keyword as a hash reader
+
+    (:a #{:a 10})
+    => 10
+    (call :a #{:a 100})
+    => 100
+
 ### Useful functions
 
-* Double dot
+#### Double dot
 
     (0.. 10)
     => (0 1 2 3 4 5 6 7 8 9 10)
