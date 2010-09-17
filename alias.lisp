@@ -116,6 +116,8 @@
   (apply #'defalias alias))
 
 (defun require (module-name &optional pathname-list)
+  (disable-uncl-special-form)
   (disable-uncl-syntax)
   (cl:require module-name pathname-list)
-  (enable-uncl-syntax))
+  (enable-uncl-syntax)
+  (enable-uncl-special-form))

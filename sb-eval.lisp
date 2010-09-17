@@ -9,9 +9,7 @@
   (%simple-eval-in-lexenv original-exp lexenv))
 
 (defmethod simple-eval-in-lexenv ((original-exp cons) lexenv)
-  ;; FIXME: this might be slow
-  (if (or (eq *package* (find-package :uncl))
-          (eq *package* (find-package :uncl-user)))
+  (if uncl:*enable-uncl-special-form*
       (%simple-eval-in-lexenv
        (case (car original-exp)
          ((not (string= :uncl-user (package-name *package*))) original-exp)
@@ -48,3 +46,11 @@
 
 (defun funcall (function &rest arguments)
   (apply (%keyword-function-or function) arguments))
+
+(in-package :uncl)
+
+(defun enable-uncl-special-form ()
+  (setq *enable-uncl-special-form* t))
+
+(defun disable-uncl-special-form ()
+  (setq *enable-uncl-special-form* nil))

@@ -876,6 +876,7 @@
            :single-float-negative-epsilon
            :t
            :*argv*
+           :*enable-uncl-special-form*
 
            ;; named-readtable
            :in-readtable
@@ -898,3 +899,4 @@
 
 (setf *print-case* :downcase)
 (defvar uncl:*argv* sb-ext:*posix-argv*)
+(defvar uncl:*enable-uncl-special-form* nil)

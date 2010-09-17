@@ -29,4 +29,5 @@
                (:file "debug")))
 
 (defmethod asdf:perform :after ((op load-op) (c (eql (find-system :uncl))))
-  (funcall (intern (symbol-name :enable-uncl-syntax) (find-package :uncl))))
+  (funcall (intern (symbol-name :enable-uncl-syntax) (find-package :uncl)))
+  (funcall (intern (symbol-name :enable-uncl-special-form) (find-package :uncl))))
