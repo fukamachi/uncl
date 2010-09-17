@@ -46,11 +46,3 @@
 
 (defun funcall (function &rest arguments)
   (apply (%keyword-function-or function) arguments))
-
-(in-package :uncl)
-
-(defun enable-uncl-special-form ()
-  (setq *enable-uncl-special-form* t))
-
-(defun disable-uncl-special-form ()
-  (setq *enable-uncl-special-form* nil))

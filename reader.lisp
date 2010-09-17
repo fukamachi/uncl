@@ -11,7 +11,9 @@
   (:dispatch-macro-char #\# #\` #'sharp-backquote-reader))
 
 (defun enable-uncl-syntax ()
+  (setq *enable-uncl-special-form* t)
   (in-readtable uncl:syntax))
 
 (defun disable-uncl-syntax ()
+  (setq *enable-uncl-special-form* nil)
   (in-readtable :standard))
