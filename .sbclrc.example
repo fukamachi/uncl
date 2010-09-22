@@ -1,0 +1,11 @@
+;;-*- Mode: Lisp -*-
+(require 'asdf)
+(setf sb-impl::*default-external-format* :utf-8)
+(setf sb-alien::*default-c-string-external-format* :utf-8)
+
+(defun enable-uncl ()
+  (eval-when (:compile-toplevel :load-toplevel :execute)
+    (require 'uncl)
+    (in-package :uncl-user)
+    (funcall (intern (symbol-name :enable-uncl-syntax) (find-package :uncl)))))
+
